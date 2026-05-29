@@ -7,7 +7,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('playground');
   const [systemTime, setSystemTime] = useState('00:00:00');
 
-  // ACTIVE SECTION TRACKER
+  // TRACK ACTIVE SECTION
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -22,7 +22,7 @@ export default function Navbar() {
       }
     );
 
-    const sections = document.querySelectorAll('section, div[id]');
+    const sections = document.querySelectorAll('section[id]');
 
     sections.forEach((section) => {
       observer.observe(section);
@@ -66,9 +66,9 @@ export default function Navbar() {
   return (
     <>
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-[88px] bg-black border-r border-neutral-900 z-50 flex-col items-center justify-between py-6 font-mono select-none">
+      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-[88px] bg-black border-r border-neutral-900 z-50 flex-col items-center justify-between py-6 font-mono">
 
-        {/* TOP SECTION */}
+        {/* TOP */}
         <div className="flex flex-col items-center">
           <button
             onClick={() =>
@@ -79,7 +79,7 @@ export default function Navbar() {
             }
             className="flex flex-col items-center gap-2"
           >
-            <div className="w-11 h-11 rounded-2xl bg-neutral-950 border border-neutral-800 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.08)]">
+            <div className="w-11 h-11 rounded-2xl bg-neutral-950 border border-neutral-800 flex items-center justify-center">
               <Terminal className="w-4 h-4 text-emerald-400" />
             </div>
 
@@ -89,14 +89,14 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* CENTER NAVIGATION */}
+        {/* CENTER NAV */}
         <div className="flex flex-col items-center gap-10 flex-1 justify-center">
 
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleScrollTo(link.id)}
-              className="flex flex-col items-center group"
+              className="flex flex-col items-center"
             >
               {/* CODE */}
               <span
@@ -109,8 +109,8 @@ export default function Navbar() {
                 {link.code}
               </span>
 
-              {/* STABLE ROTATED TEXT */}
-              <div className="h-[120px] w-[20px] flex items-center justify-center overflow-visible">
+              {/* ROTATED LABEL */}
+              <div className="h-[120px] w-[20px] flex items-center justify-center">
 
                 <span
                   className={`text-[9px] uppercase font-bold whitespace-nowrap transition-all duration-300 ${
@@ -133,7 +133,7 @@ export default function Navbar() {
         </div>
 
         {/* BOTTOM CLOCK */}
-        <div className="flex flex-col items-center gap-2 pb-1">
+        <div className="flex flex-col items-center gap-2">
           <Disc className="w-3 h-3 text-neutral-700 animate-spin" />
 
           <span className="text-[9px] text-neutral-600 font-bold tabular-nums">
@@ -142,8 +142,8 @@ export default function Navbar() {
         </div>
       </aside>
 
-      {/* MOBILE NAVIGATION */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-2xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono select-none">
+      {/* MOBILE NAV */}
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-2xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono">
 
         {navLinks.map((link) => (
           <button
