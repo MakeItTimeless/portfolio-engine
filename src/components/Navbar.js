@@ -1,3 +1,182 @@
+// 'use client';
+
+// import { useState, useEffect } from 'react';
+// import { Terminal, Layers, Disc } from 'lucide-react';
+
+// export default function Navbar() {
+//   const [activeSection, setActiveSection] = useState('playground');
+//   const [systemTime, setSystemTime] = useState('00:00:00');
+
+//   // Track active section
+//   useEffect(() => {
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         entries.forEach((entry) => {
+//           if (entry.isIntersecting) {
+//             setActiveSection(entry.target.id);
+//           }
+//         });
+//       },
+//       {
+//         threshold: 0.6,
+//       }
+//     );
+
+//     const sections = document.querySelectorAll('section, div[id]');
+
+//     sections.forEach((section) => {
+//       observer.observe(section);
+//     });
+
+//     return () => observer.disconnect();
+//   }, []);
+
+//   // Clock logic
+//   useEffect(() => {
+//     const updateClock = () => {
+//       const now = new Date();
+//       setSystemTime(now.toTimeString().split(' ')[0]);
+//     };
+
+//     updateClock();
+
+//     const interval = setInterval(updateClock, 1000);
+
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   const navLinks = [
+//     { id: 'playground', label: 'SANDBOX', code: '0x01' },
+//     { id: 'dependencies', label: 'MANIFEST', code: '0x02' },
+//     { id: 'story', label: 'JOURNEY', code: '0x03' },
+//     { id: 'projects', label: 'BLUEPRINTS', code: '0x04' },
+//     { id: 'activities', label: 'ECOSYSTEM', code: '0x05' },
+//   ];
+
+//   const handleScrollTo = (id) => {
+//     const element = document.getElementById(id);
+
+//     if (element) {
+//       element.scrollIntoView({
+//         behavior: 'smooth',
+//       });
+//     }
+//   };
+
+//   return (
+//     <>
+//       {/* DESKTOP SIDEBAR */}
+// {/* DESKTOP SIDEBAR */}
+// <aside
+//   className="
+//     hidden lg:flex
+//     fixed top-0 left-0 h-screen
+//     w-[88px]
+//     bg-neutral-950/95
+//     backdrop-blur-xl
+//     border-r border-neutral-900
+//     z-50
+//     flex-col items-center
+//     font-mono select-none
+
+//     transition-transform duration-500 ease-in-out
+
+//     -translate-x-[72px]
+//     hover:translate-x-0
+//   "
+// >
+//         {/* TOP LOGO */}
+//         <div className="pt-8 flex flex-col items-center">
+//           <div
+//             onClick={() =>
+//               window.scrollTo({
+//                 top: 0,
+//                 behavior: 'smooth',
+//               })
+//             }
+//             className="cursor-pointer flex flex-col items-center gap-1"
+//           >
+//             <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+//               <Terminal className="w-4 h-4 text-emerald-400" />
+//             </div>
+
+//             <span className="text-[8px] tracking-widest text-neutral-600 uppercase font-bold mt-1">
+//               SRIJANI
+//             </span>
+//           </div>
+//         </div>
+
+//         {/* CENTER NAVIGATION */}
+//         <div className="flex-1 flex items-center justify-center w-full">
+//           <div className="flex flex-col items-center gap-8">
+//             {navLinks.map((link) => (
+//               <button
+//                 key={link.id}
+//                 onClick={() => handleScrollTo(link.id)}
+//                 className="group flex flex-col items-center"
+//               >
+//                 {/* CODE */}
+//                 <span
+//                   className={`text-[9px] font-bold leading-none transition-colors duration-300 ${
+//                     activeSection === link.id
+//                       ? 'text-emerald-400'
+//                       : 'text-neutral-700'
+//                   }`}
+//                 >
+//                   {link.code}
+//                 </span>
+
+//                 {/* VERTICAL LABEL */}
+//                 <span
+//                   className={`text-[9px] tracking-[0.22em] uppercase font-bold mt-2 whitespace-nowrap [writing-mode:vertical-lr] rotate-180 leading-none transition-colors duration-300 ${
+//                     activeSection === link.id
+//                       ? 'text-white'
+//                       : 'text-neutral-500'
+//                   }`}
+//                 >
+//                   {link.label}
+//                 </span>
+//               </button>
+//             ))}
+//           </div>
+//         </div>
+
+//         {/* BOTTOM CLOCK */}
+//         <div className="pb-6 flex flex-col items-center gap-2 text-neutral-600 text-[9px]">
+//           <Disc className="w-3 h-3 text-neutral-800 animate-spin" />
+
+//           <span className="font-bold tabular-nums">
+//             {systemTime}
+//           </span>
+//         </div>
+//       </aside>
+
+//       {/* MOBILE DOCK */}
+//       <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono select-none">
+//         {navLinks.map((link) => (
+//           <button
+//             key={link.id}
+//             onClick={() => handleScrollTo(link.id)}
+//             className={`flex flex-col items-center justify-center p-1 rounded-lg flex-1 transition-colors duration-300 ${
+//               activeSection === link.id
+//                 ? 'text-emerald-400'
+//                 : 'text-neutral-600'
+//             }`}
+//           >
+//             <Layers className="w-3.5 h-3.5 mb-0.5" />
+
+//             <span className="text-[7px] font-black tracking-tighter truncate max-w-[40px]">
+//               {link.label.split(' ')[0]}
+//             </span>
+//           </button>
+//         ))}
+//       </div>
+//     </>
+//   );
+// }
+
+
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -7,7 +186,9 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('playground');
   const [systemTime, setSystemTime] = useState('00:00:00');
 
-  // TRACK ACTIVE SECTION
+  /* =========================================================
+     ACTIVE SECTION TRACKER
+  ========================================================= */
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -22,7 +203,7 @@ export default function Navbar() {
       }
     );
 
-    const sections = document.querySelectorAll('section[id]');
+    const sections = document.querySelectorAll('section, div[id]');
 
     sections.forEach((section) => {
       observer.observe(section);
@@ -31,11 +212,16 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // CLOCK
+  /* =========================================================
+     SYSTEM CLOCK
+  ========================================================= */
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
-      setSystemTime(now.toTimeString().split(' ')[0]);
+
+      setSystemTime(
+        now.toTimeString().split(' ')[0]
+      );
     };
 
     updateClock();
@@ -45,6 +231,9 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, []);
 
+  /* =========================================================
+     NAVIGATION LINKS
+  ========================================================= */
   const navLinks = [
     { id: 'playground', label: 'SANDBOX', code: '0x01' },
     { id: 'dependencies', label: 'MANIFEST', code: '0x02' },
@@ -53,6 +242,9 @@ export default function Navbar() {
     { id: 'activities', label: 'ECOSYSTEM', code: '0x05' },
   ];
 
+  /* =========================================================
+     SMOOTH SCROLL
+  ========================================================= */
   const handleScrollTo = (id) => {
     const element = document.getElementById(id);
 
@@ -65,104 +257,224 @@ export default function Navbar() {
 
   return (
     <>
-      {/* DESKTOP SIDEBAR */}
-      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-[88px] bg-black border-r border-neutral-900 z-50 flex-col items-center justify-between py-6 font-mono">
+      {/* =========================================================
+          DESKTOP HOVER SIDEBAR
+      ========================================================= */}
+      <div className="hidden lg:block fixed left-0 top-0 h-screen z-50 group">
 
-        {/* TOP */}
-        <div className="flex flex-col items-center">
-          <button
-            onClick={() =>
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              })
-            }
-            className="flex flex-col items-center gap-2"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-neutral-950 border border-neutral-800 flex items-center justify-center">
-              <Terminal className="w-4 h-4 text-emerald-400" />
-            </div>
+        {/* =====================================================
+            ALWAYS VISIBLE HOVER BUTTON
+        ===================================================== */}
+        <div
+          className="
+            absolute left-0 top-1/2
+            -translate-y-1/2
 
-            <span className="text-[8px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
-              SRIJANI
-            </span>
-          </button>
+            w-5 h-40
+
+            bg-neutral-900/90
+            backdrop-blur-xl
+
+            border border-neutral-800
+            border-l-0
+
+            rounded-r-2xl
+
+            flex items-center justify-center
+
+            transition-all duration-300
+            group-hover:w-6
+            group-hover:bg-neutral-800
+          "
+        >
+          {/* GLOW INDICATOR */}
+          <div className="w-1 h-14 rounded-full bg-emerald-400 animate-pulse" />
         </div>
 
-        {/* CENTER NAV */}
-        <div className="flex flex-col items-center gap-10 flex-1 justify-center">
+        {/* =====================================================
+            SIDEBAR PANEL
+        ===================================================== */}
+        <aside
+          className="
+            absolute top-0 left-0
 
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => handleScrollTo(link.id)}
-              className="flex flex-col items-center"
+            h-screen
+            w-[88px]
+
+            bg-neutral-950/95
+            backdrop-blur-2xl
+
+            border-r border-neutral-900
+
+            flex flex-col items-center
+            font-mono
+            select-none
+
+            transition-transform duration-500 ease-in-out
+
+            -translate-x-[72px]
+            group-hover:translate-x-0
+          "
+        >
+
+          {/* =================================================
+              TOP LOGO
+          ================================================= */}
+          <div className="pt-8 flex flex-col items-center">
+
+            <div
+              onClick={() =>
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                })
+              }
+              className="cursor-pointer flex flex-col items-center gap-1"
             >
-              {/* CODE */}
-              <span
-                className={`text-[9px] font-bold mb-6 transition-all duration-300 ${
-                  activeSection === link.id
-                    ? 'text-emerald-400'
-                    : 'text-neutral-700'
-                }`}
-              >
-                {link.code}
+
+              {/* TERMINAL ICON */}
+              <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center shadow-lg">
+                <Terminal className="w-4 h-4 text-emerald-400" />
+              </div>
+
+              {/* NAME */}
+              <span className="text-[8px] tracking-widest text-neutral-600 uppercase font-bold mt-1">
+                SRIJANI
               </span>
 
-              {/* ROTATED LABEL */}
-              <div className="h-[120px] w-[20px] flex items-center justify-center">
+            </div>
+          </div>
 
-                <span
-                  className={`text-[9px] uppercase font-bold whitespace-nowrap transition-all duration-300 ${
-                    activeSection === link.id
-                      ? 'text-white'
-                      : 'text-neutral-500'
-                  }`}
-                  style={{
-                    transform: 'rotate(-90deg)',
-                    letterSpacing: '0.28em',
-                  }}
+          {/* =================================================
+              CENTER NAVIGATION
+          ================================================= */}
+          <div className="flex-1 flex items-center justify-center w-full">
+
+            <div className="flex flex-col items-center gap-8">
+
+              {navLinks.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => handleScrollTo(link.id)}
+                  className="group/nav flex flex-col items-center"
                 >
-                  {link.label}
-                </span>
 
-              </div>
-            </button>
-          ))}
+                  {/* SECTION CODE */}
+                  <span
+                    className={`
+                      text-[9px]
+                      font-bold
+                      leading-none
+                      transition-all
+                      duration-300
 
-        </div>
+                      ${
+                        activeSection === link.id
+                          ? 'text-emerald-400'
+                          : 'text-neutral-700'
+                      }
+                    `}
+                  >
+                    {link.code}
+                  </span>
 
-        {/* BOTTOM CLOCK */}
-        <div className="flex flex-col items-center gap-2">
-          <Disc className="w-3 h-3 text-neutral-700 animate-spin" />
+                  {/* VERTICAL LABEL */}
+                  <span
+                    className={`
+                      text-[9px]
+                      tracking-[0.22em]
+                      uppercase
+                      font-bold
+                      mt-2
+                      whitespace-nowrap
+                      [writing-mode:vertical-lr]
+                      rotate-180
+                      leading-none
+                      transition-all
+                      duration-300
 
-          <span className="text-[9px] text-neutral-600 font-bold tabular-nums">
-            {systemTime}
-          </span>
-        </div>
-      </aside>
+                      ${
+                        activeSection === link.id
+                          ? 'text-white'
+                          : 'text-neutral-500'
+                      }
+                    `}
+                  >
+                    {link.label}
+                  </span>
 
-      {/* MOBILE NAV */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-2xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono">
+                </button>
+              ))}
 
+            </div>
+          </div>
+
+          {/* =================================================
+              BOTTOM CLOCK
+          ================================================= */}
+          <div className="pb-6 flex flex-col items-center gap-2 text-neutral-600 text-[9px]">
+
+            <Disc className="w-3 h-3 text-neutral-800 animate-spin" />
+
+            <span className="font-bold tabular-nums">
+              {systemTime}
+            </span>
+
+          </div>
+
+        </aside>
+      </div>
+
+      {/* =========================================================
+          MOBILE BOTTOM DOCK
+      ========================================================= */}
+      <div
+        className="
+          lg:hidden
+          fixed bottom-4 left-4 right-4
+          h-14
+
+          bg-neutral-950/90
+          backdrop-blur-xl
+
+          border border-neutral-800
+          rounded-xl
+
+          z-[100]
+          shadow-2xl
+
+          flex items-center justify-around
+          px-2
+
+          font-mono
+          select-none
+        "
+      >
         {navLinks.map((link) => (
           <button
             key={link.id}
             onClick={() => handleScrollTo(link.id)}
-            className={`flex flex-col items-center justify-center flex-1 h-full rounded-xl transition-all duration-300 ${
-              activeSection === link.id
-                ? 'text-emerald-400'
-                : 'text-neutral-600'
-            }`}
-          >
-            <Layers className="w-4 h-4 mb-1" />
+            className={`
+              flex flex-col items-center justify-center
+              p-1 rounded-lg flex-1
+              transition-colors duration-300
 
-            <span className="text-[7px] font-black tracking-tight">
+              ${
+                activeSection === link.id
+                  ? 'text-emerald-400'
+                  : 'text-neutral-600'
+              }
+            `}
+          >
+
+            <Layers className="w-3.5 h-3.5 mb-0.5" />
+
+            <span className="text-[7px] font-black tracking-tighter truncate max-w-[40px]">
               {link.label.split(' ')[0]}
             </span>
+
           </button>
         ))}
-
       </div>
     </>
   );
