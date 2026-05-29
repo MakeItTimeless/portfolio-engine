@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { Terminal, Layers, Disc } from 'lucide-react';
 
@@ -6,7 +7,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('playground');
   const [systemTime, setSystemTime] = useState('00:00:00');
 
-  // 1. Logic to track active section based on scroll
+  // Track active section
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -16,24 +17,31 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.6 } // Adjust based on when you want the nav to switch
+      {
+        threshold: 0.6,
+      }
     );
 
-    document.querySelectorAll('section, div[id]').forEach((section) => {
+    const sections = document.querySelectorAll('section, div[id]');
+
+    sections.forEach((section) => {
       observer.observe(section);
     });
 
     return () => observer.disconnect();
   }, []);
 
-  // 2. Clock logic
+  // Clock logic
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
       setSystemTime(now.toTimeString().split(' ')[0]);
     };
+
     updateClock();
+
     const interval = setInterval(updateClock, 1000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -42,51 +50,107 @@ export default function Navbar() {
     { id: 'dependencies', label: 'MANIFEST', code: '0x02' },
     { id: 'story', label: 'JOURNEY', code: '0x03' },
     { id: 'projects', label: 'BLUEPRINTS', code: '0x04' },
-    { id: 'activities', label: 'ECOSYSTEM', code: '0x05' }
+    { id: 'activities', label: 'ECOSYSTEM', code: '0x05' },
   ];
 
   const handleScrollTo = (id) => {
     const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
     <>
-      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-24 bg-neutral-950 border-r border-neutral-900 z-50 flex-col justify-between items-center py-8 font-mono select-none">
-        <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="cursor-pointer flex flex-col items-center gap-1">
-          <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-            <Terminal className="w-4 h-4 text-emerald-400" />
+      {/* DESKTOP SIDEBAR */}
+      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-[88px] bg-neutral-950 border-r border-neutral-900 z-50 flex-col items-center font-mono select-none">
+
+        {/* TOP LOGO */}
+        <div className="pt-8 flex flex-col items-center">
+          <div
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              })
+            }
+            className="cursor-pointer flex flex-col items-center gap-1"
+          >
+            <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+              <Terminal className="w-4 h-4 text-emerald-400" />
+            </div>
+
+            <span className="text-[8px] tracking-widest text-neutral-600 uppercase font-bold mt-1">
+              SRIJANI
+            </span>
           </div>
-          <span className="text-[8px] tracking-widest text-neutral-600 uppercase font-bold mt-1">SRIJANI</span>
         </div>
 
-        <div className="flex flex-col gap-6">
-          {navLinks.map((link) => (
-            <button key={link.id} onClick={() => handleScrollTo(link.id)} className="group relative flex flex-col items-center py-2 px-1">
-              <span className={`text-[9px] font-bold ${activeSection === link.id ? 'text-emerald-400' : 'text-neutral-700'}`}>{link.code}</span>
-              <span className={`text-[9px] tracking-[0.2em] uppercase font-bold mt-2 whitespace-nowrap [writing-mode:vertical-lr] ${activeSection === link.id ? 'text-white' : 'text-neutral-500'}`}>
-                {link.label}
-              </span>
-            </button>
-          ))}
+        {/* CENTER NAVIGATION */}
+        <div className="flex-1 flex items-center justify-center w-full">
+          <div className="flex flex-col items-center gap-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleScrollTo(link.id)}
+                className="group flex flex-col items-center"
+              >
+                {/* CODE */}
+                <span
+                  className={`text-[9px] font-bold leading-none transition-colors duration-300 ${
+                    activeSection === link.id
+                      ? 'text-emerald-400'
+                      : 'text-neutral-700'
+                  }`}
+                >
+                  {link.code}
+                </span>
+
+                {/* VERTICAL LABEL */}
+                <span
+                  className={`text-[9px] tracking-[0.22em] uppercase font-bold mt-2 whitespace-nowrap [writing-mode:vertical-lr] rotate-180 leading-none transition-colors duration-300 ${
+                    activeSection === link.id
+                      ? 'text-white'
+                      : 'text-neutral-500'
+                  }`}
+                >
+                  {link.label}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="flex flex-col items-center gap-2 text-neutral-600 text-[9px]">
+        {/* BOTTOM CLOCK */}
+        <div className="pb-6 flex flex-col items-center gap-2 text-neutral-600 text-[9px]">
           <Disc className="w-3 h-3 text-neutral-800 animate-spin" />
-          <span className="font-bold tabular-nums">{systemTime}</span>
+
+          <span className="font-bold tabular-nums">
+            {systemTime}
+          </span>
         </div>
       </aside>
 
-      {/* Mobile Dock remains same */}
+      {/* MOBILE DOCK */}
       <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono select-none">
         {navLinks.map((link) => (
           <button
             key={link.id}
             onClick={() => handleScrollTo(link.id)}
-            className={`flex flex-col items-center justify-center p-1 rounded-lg flex-1 ${activeSection === link.id ? 'text-emerald-400' : 'text-neutral-600'}`}
+            className={`flex flex-col items-center justify-center p-1 rounded-lg flex-1 transition-colors duration-300 ${
+              activeSection === link.id
+                ? 'text-emerald-400'
+                : 'text-neutral-600'
+            }`}
           >
             <Layers className="w-3.5 h-3.5 mb-0.5" />
-            <span className="text-[7px] font-black tracking-tighter truncate max-w-[40px]">{link.label.split(' ')[0]}</span>
+
+            <span className="text-[7px] font-black tracking-tighter truncate max-w-[40px]">
+              {link.label.split(' ')[0]}
+            </span>
           </button>
         ))}
       </div>
