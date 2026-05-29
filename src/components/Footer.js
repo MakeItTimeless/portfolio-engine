@@ -5,18 +5,19 @@ import { Terminal, CornerDownLeft, Shield, HelpCircle, User, Radio, Trash2 } fro
 export default function Footer() {
   const [input, setInput] = useState('');
   
-  // Custom High-Density Mainframe Node Crest Art
+  // High-contrast S-Snake integrated logo
   const terminalLogo = `
-         ▄▄██████▄▄
-       ▄████▀▀▀▀████▄
-     ▄███▀   ▄▄   ▀███▄     Node ID: SRJ_CORE_01
-    ███▀   ▄████▄   ▀███    Subnet:  BENGALURU_WAN
-   ███    ████████    ███   SecOps:  LEVEL_MAX
-   ███    ▀██████▀    ███
-    ███▄   ▀████▀   ▄███    ── CORE LOGIC SYSTEM ──
-     ▀███▄   ▀▀   ▄███▀     [STATUS: SECURE_INITIALIZED]
-       ▀████▄▄▄▄████▀
-         ▀▀██████▀▀
+      .----.
+     /  ..  \\
+    |  /  |  |
+     \\  \\--'
+      '--.  \\
+    |\\  |  |
+     \\  '--'
+      '----'
+    
+    S R I J A N I // D E V
+    [ STATUS: SYSTEM_READY ]
 ===================================================
 `;
 
@@ -37,7 +38,7 @@ export default function Footer() {
 
     const newHistory = [...history, { text: `srijani_m:~ engine$ ${commandText}`, type: 'input' }];
 
-    // 1. Security Blocklist (Dangerous commands simulate a breach)
+    // 1. Security Blocklist
     const dangerousCommands = ['rm', 'sudo', 'halt', 'reboot', 'kill', 'shutdown', 'chown', 'chmod'];
     if (dangerousCommands.some(forbidden => cmd.startsWith(forbidden))) {
       setHistory([
@@ -99,7 +100,6 @@ export default function Footer() {
         break;
 
       default:
-        // Friendly fallback
         setHistory([
           ...newHistory,
           { text: `System operative: Command "${cmd}" is non-executable. Try 'help' for valid instruction sets.`, type: 'sys' }
@@ -193,7 +193,7 @@ export default function Footer() {
         <div className="border-t border-neutral-900/60 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] text-neutral-600 font-bold">
           <div><span className="tracking-wide">© 2026 Srijani Mondal. All rights reserved.</span></div>
           <div className="flex gap-4 tracking-wider">
-            <span>STABLE_BUILD_2026</span> <span className="text-neutral-700">|</span> <span>// BENGALURU_NODE</span>
+            <span>STABLE_BUILD_2026</span> <span className="text-neutral-900">|</span> <span>// BENGALURU_NODE</span>
           </div>
         </div>
       </div>
