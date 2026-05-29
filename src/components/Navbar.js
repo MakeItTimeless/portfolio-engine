@@ -7,7 +7,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('playground');
   const [systemTime, setSystemTime] = useState('00:00:00');
 
-  // Track active section
+  // ACTIVE SECTION TRACKER
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,7 +31,7 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Clock logic
+  // CLOCK
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -66,93 +66,103 @@ export default function Navbar() {
   return (
     <>
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-[88px] bg-neutral-950 border-r border-neutral-900 z-50 flex-col items-center font-mono select-none">
+      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-[88px] bg-black border-r border-neutral-900 z-50 flex-col items-center justify-between py-6 font-mono select-none">
 
-        {/* TOP LOGO */}
-        <div className="pt-8 flex flex-col items-center">
-          <div
+        {/* TOP SECTION */}
+        <div className="flex flex-col items-center">
+          <button
             onClick={() =>
               window.scrollTo({
                 top: 0,
                 behavior: 'smooth',
               })
             }
-            className="cursor-pointer flex flex-col items-center gap-1"
+            className="flex flex-col items-center gap-2"
           >
-            <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-2xl bg-neutral-950 border border-neutral-800 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.08)]">
               <Terminal className="w-4 h-4 text-emerald-400" />
             </div>
 
-            <span className="text-[8px] tracking-widest text-neutral-600 uppercase font-bold mt-1">
+            <span className="text-[8px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
               SRIJANI
             </span>
-          </div>
+          </button>
         </div>
 
         {/* CENTER NAVIGATION */}
-        <div className="flex-1 flex items-center justify-center w-full">
-          <div className="flex flex-col items-center gap-8">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleScrollTo(link.id)}
-                className="group flex flex-col items-center"
-              >
-                {/* CODE */}
-                <span
-                  className={`text-[9px] font-bold leading-none transition-colors duration-300 ${
-                    activeSection === link.id
-                      ? 'text-emerald-400'
-                      : 'text-neutral-700'
-                  }`}
-                >
-                  {link.code}
-                </span>
+        <div className="flex flex-col items-center gap-10 flex-1 justify-center">
 
-                {/* VERTICAL LABEL */}
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => handleScrollTo(link.id)}
+              className="flex flex-col items-center group"
+            >
+              {/* CODE */}
+              <span
+                className={`text-[9px] font-bold mb-6 transition-all duration-300 ${
+                  activeSection === link.id
+                    ? 'text-emerald-400'
+                    : 'text-neutral-700'
+                }`}
+              >
+                {link.code}
+              </span>
+
+              {/* STABLE ROTATED TEXT */}
+              <div className="h-[120px] w-[20px] flex items-center justify-center overflow-visible">
+
                 <span
-                  className={`text-[9px] tracking-[0.22em] uppercase font-bold mt-2 whitespace-nowrap [writing-mode:vertical-lr] rotate-180 leading-none transition-colors duration-300 ${
+                  className={`text-[9px] uppercase font-bold whitespace-nowrap transition-all duration-300 ${
                     activeSection === link.id
                       ? 'text-white'
                       : 'text-neutral-500'
                   }`}
+                  style={{
+                    transform: 'rotate(-90deg)',
+                    letterSpacing: '0.28em',
+                  }}
                 >
                   {link.label}
                 </span>
-              </button>
-            ))}
-          </div>
+
+              </div>
+            </button>
+          ))}
+
         </div>
 
         {/* BOTTOM CLOCK */}
-        <div className="pb-6 flex flex-col items-center gap-2 text-neutral-600 text-[9px]">
-          <Disc className="w-3 h-3 text-neutral-800 animate-spin" />
+        <div className="flex flex-col items-center gap-2 pb-1">
+          <Disc className="w-3 h-3 text-neutral-700 animate-spin" />
 
-          <span className="font-bold tabular-nums">
+          <span className="text-[9px] text-neutral-600 font-bold tabular-nums">
             {systemTime}
           </span>
         </div>
       </aside>
 
-      {/* MOBILE DOCK */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono select-none">
+      {/* MOBILE NAVIGATION */}
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-2xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono select-none">
+
         {navLinks.map((link) => (
           <button
             key={link.id}
             onClick={() => handleScrollTo(link.id)}
-            className={`flex flex-col items-center justify-center p-1 rounded-lg flex-1 transition-colors duration-300 ${
+            className={`flex flex-col items-center justify-center flex-1 h-full rounded-xl transition-all duration-300 ${
               activeSection === link.id
                 ? 'text-emerald-400'
                 : 'text-neutral-600'
             }`}
           >
-            <Layers className="w-3.5 h-3.5 mb-0.5" />
+            <Layers className="w-4 h-4 mb-1" />
 
-            <span className="text-[7px] font-black tracking-tighter truncate max-w-[40px]">
+            <span className="text-[7px] font-black tracking-tight">
               {link.label.split(' ')[0]}
             </span>
           </button>
         ))}
+
       </div>
     </>
   );
