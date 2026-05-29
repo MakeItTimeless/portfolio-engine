@@ -1,11 +1,32 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Terminal, Cpu, Layers, Disc, ExternalLink } from 'lucide-react';
+import { Terminal, Layers, Disc } from 'lucide-react';
 
 export default function Navbar() {
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('playground');
   const [systemTime, setSystemTime] = useState('00:00:00');
 
+  // 1. Logic to track active section based on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.6 } // Adjust based on when you want the nav to switch
+    );
+
+    document.querySelectorAll('section, div[id]').forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 2. Clock logic
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -31,7 +52,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* DESKTOP SIDEBAR */}
       <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-24 bg-neutral-950 border-r border-neutral-900 z-50 flex-col justify-between items-center py-8 font-mono select-none">
         <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="cursor-pointer flex flex-col items-center gap-1">
           <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
@@ -57,7 +77,7 @@ export default function Navbar() {
         </div>
       </aside>
 
-      {/* MOBILE DOCK */}
+      {/* Mobile Dock remains same */}
       <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-neutral-950/90 backdrop-blur-xl border border-neutral-800 rounded-xl z-[100] shadow-2xl flex items-center justify-around px-2 font-mono select-none">
         {navLinks.map((link) => (
           <button
